@@ -11,7 +11,8 @@ namespace Gallery
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            //Server.MapPath(@"~/Content/Images")
         }
+
     }
 }
