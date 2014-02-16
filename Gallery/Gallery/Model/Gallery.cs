@@ -18,6 +18,7 @@ namespace Gallery.Model
         
         public static string testString;
 
+
         //Konstrucktor
         static Gallery()
         {
@@ -31,7 +32,8 @@ namespace Gallery.Model
             PhysicalUploadedImagesPath = Path.Combine(AppDomain.CurrentDomain.GetData("APPBASE").ToString(), @"Content\Images");
         }
 
-        //Metod som returnerar alla filnamn som finns i mappen med bilderna.
+
+        //Metod som returnerar alla filnamn som finns i mappen med bilderna. //EJ KLAR
         public IEnumerable<string> GetImageNames()
         {
             FileInfo[] allFiles = new DirectoryInfo(PhysicalUploadedImagesPath).GetFiles();
@@ -56,7 +58,7 @@ namespace Gallery.Model
             return false;
         }
 
-        //Tar emot en bild och kontrollerar så den är av rätt filtyp (gif, jpg, png)
+        //Tar emot en bild och kontrollerar så den är av rätt filtyp (gif, jpg, png) 
         bool isValidImage(Image image)
         {
             if (
@@ -74,7 +76,7 @@ namespace Gallery.Model
             }
         }
 
-        //Funktion som sparar uppladdade bilder och skapar en tumnagel.
+        //Funktion som sparar uppladdade bilder och skapar en tumnagel. //EJ KLAR
         public string SaveImage(Stream stream, string fileName)
         {
             return null;
