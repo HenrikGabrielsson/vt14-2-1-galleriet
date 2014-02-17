@@ -18,7 +18,7 @@
         <asp:Image ID="ImageDisplay" runat="server" />
 
     <%-- Galleriet --%>
-        <asp:Repeater ID="GalleryRepeater" runat="server" ItemType="System.IO.FileInfo" SelectMethod="GalleryRepeater_GetData">
+        <asp:Repeater ID="GalleryRepeater" runat="server" ItemType="System.String" SelectMethod="GalleryRepeater_GetData">
             <HeaderTemplate>
                 <ul>
             </HeaderTemplate>
@@ -26,7 +26,7 @@
 
             <ItemTemplate>
                 <li>
-
+                    <%# Item %>
                 </li>
             </ItemTemplate>
 

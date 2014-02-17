@@ -20,9 +20,12 @@ namespace Gallery
             
         }
 
-        public int[] GalleryRepeater_GetData()
+        public IEnumerable<string> GalleryRepeater_GetData()
         {
-            return null;
+            ImageGallery imgGall = new ImageGallery();
+
+            return imgGall.GetImageNames();
+ 
         }
 
     }
