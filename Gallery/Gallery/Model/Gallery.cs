@@ -13,9 +13,9 @@ namespace Gallery.Model
         //regex som används för att kontrollera filändelsen och se till så filnamnet är korrekt formaterat.
         static Regex ApprovedExtensions;
         static Regex SanitizePath;
-   
+
         static string PhysicalUploadedImagesPath;
-        
+
         public static string testString;
 
 
@@ -25,7 +25,7 @@ namespace Gallery.Model
             ApprovedExtensions = new Regex("^.*\\.(gif|jpg|png)$");
 
             //Nu innehåller SanitizePath alla tecken som inte får användas.
-            string invalidChars= new String(Path.GetInvalidPathChars());
+            string invalidChars = new String(Path.GetInvalidPathChars());
             SanitizePath = new Regex(string.Format("[{0}]", Regex.Escape(invalidChars)));
 
             //Sökvägen till bildernas mapp
@@ -33,13 +33,22 @@ namespace Gallery.Model
         }
 
 
-        //Metod som returnerar alla filnamn som finns i mappen med bilderna. //EJ KLAR
+        //Metod som returnerar alla filnamn som finns i mappen med bilderna.
         public IEnumerable<string> GetImageNames()
         {
             FileInfo[] allFiles = new DirectoryInfo(PhysicalUploadedImagesPath).GetFiles();
-            
-            return null;
+
+            //Ny lista som fylls med namnen på filerna.
+            List<string> fileNames = new List<string>();
+            foreach (FileInfo file in allFiles)
+            {
+                fileNames.Add(file.Name);
+            }
+
+            return fileNames.AsReadOnly();
         }
+
+
 
         //Kollar om en bild verkligen finns
         public static bool ImageExists(string name)
@@ -47,9 +56,9 @@ namespace Gallery.Model
             FileInfo[] allFiles = new DirectoryInfo(PhysicalUploadedImagesPath).GetFiles();
 
             //kollar alla namn och jämför det med argumentet. Return true om nåt hittas
-            foreach(FileInfo fi in allFiles)
+            foreach (FileInfo fi in allFiles)
             {
-                if(fi.Name == name)
+                if (fi.Name == name)
                 {
                     return true;
                 }
@@ -82,6 +91,6 @@ namespace Gallery.Model
             return null;
         }
 
-   
+
     }
 }
