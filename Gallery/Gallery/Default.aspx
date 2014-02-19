@@ -13,7 +13,7 @@
         <%-- Här visas fel-meddelanden --%>
         <asp:ValidationSummary ID="ValidationSummary" runat="server" />    
     <div>
-                                                                             <%--DEN HÄR SKA BORT --%>        <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+                              
     <%-- Bilden som visas --%>
         <asp:Image ID="ImageDisplay" runat="server" />
 
@@ -26,7 +26,10 @@
 
             <ItemTemplate>
                 <li>
-                    <%# Item %>
+                    <asp:HyperLink ID="HyperLink" runat="server" NavigateUrl="~">
+                        <asp:Image ID="Image" runat="server" ImageUrl='<%# String.Format(@"~/Content/Images/Thumbnails/{0}", Item) %>' />                        
+                    </asp:HyperLink>
+                    
                 </li>
             </ItemTemplate>
 
@@ -34,11 +37,11 @@
             <FooterTemplate>
                 </ul>
             </FooterTemplate>
-
+            
 
         </asp:Repeater>
 
-
+        <asp:Label runat="server" Text="Label" ID="Label"></asp:Label>
     <%-- Upload--%>
         <asp:FileUpload ID="FileUpload" runat="server" />  
         <asp:Button ID="UploadButton" runat="server" Text="Ladda upp" OnClick="UploadButton_Click" />

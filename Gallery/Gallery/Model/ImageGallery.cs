@@ -48,7 +48,7 @@ namespace Gallery.Model
 
 
 
-        //Kollar om en bild verkligen finns
+        //Kollar om en bild finns
         public static bool ImageExists(string name)
         {
             FileInfo[] allFiles = new DirectoryInfo(PhysicalUploadedImagesPath).GetFiles();
@@ -86,6 +86,13 @@ namespace Gallery.Model
         //Funktion som sparar uppladdade bilder och skapar en tumnagel. //EJ KLAR
         public string SaveImage(Stream stream, string fileName)
         {
+  
+            //Skapar ett bildobjekt från strömmen och sparar den.
+            Image img = Image.FromStream(stream);
+            img.Save(String.Format("{0}\\{1}",PhysicalUploadedImagesPath, fileName));
+
+
+
             return null;
         }
 
