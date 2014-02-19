@@ -86,13 +86,32 @@ namespace Gallery.Model
         //Funktion som sparar uppladdade bilder och skapar en tumnagel. //EJ KLAR
         public string SaveImage(Stream stream, string fileName)
         {
-  
+
             //Skapar ett bildobjekt från strömmen och sparar den.
             Image img = Image.FromStream(stream);
             img.Save(String.Format("{0}\\{1}",PhysicalUploadedImagesPath, fileName));
 
 
+            //Skapar också en thumbnail
+            double factor = img.Size.Height/img.Size.Width;
+            int thumbHeight = 0;
+            int thumbWidth = 0;
 
+            if (img.Size.Height > img.Size.Width)
+            {
+                factor = (double)100 / img.Size.Height;
+                thumbHeight = 100;
+                thumbWidth = (int)(img.Size.Width * factor);
+            }
+            else
+            {
+                factor = (double)100 / img.Size.Width;
+                thumbWidth = 100;
+                thumbHeight = (int)(img.Size.Height * factor);
+            }
+
+            Image thumb = img.GetThumbnailImage(thumbWidth,thumbHeight, null, IntPtr.Zero);
+            thumb.Save(String.Format("{0}\\Thumbnails\\{1}", PhysicalUploadedImagesPath, fileName));
             return null;
         }
 
