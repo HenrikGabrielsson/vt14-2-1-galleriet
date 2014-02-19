@@ -26,7 +26,7 @@
 
             <ItemTemplate>
                 <li>
-                    <asp:HyperLink ID="HyperLink" runat="server" NavigateUrl="~">
+                    <asp:HyperLink ID="HyperLink" runat="server" NavigateUrl='<%# String.Format("#?Name={0}",Item)  %>'>
                         <asp:Image ID="Image" runat="server" ImageUrl='<%# String.Format(@"~/Content/Images/Thumbnails/{0}", Item) %>' />                        
                     </asp:HyperLink>
                     
