@@ -51,6 +51,7 @@ namespace Gallery.Model
         //Kollar om en bild finns
         public static bool ImageExists(string name)
         {
+            /*
             FileInfo[] allFiles = new DirectoryInfo(PhysicalUploadedImagesPath).GetFiles();
 
             //kollar alla namn och jämför det med argumentet. Return true om nåt hittas
@@ -63,6 +64,18 @@ namespace Gallery.Model
             }
 
             return false;
+            */
+
+            FileInfo[] allFiles = new DirectoryInfo(PhysicalUploadedImagesPath).GetFiles();
+            foreach (FileInfo file in allFiles)
+            {
+                if (file.Exists)
+                {
+                    return true;
+                }
+            }
+            return false;
+
         }
 
         //Tar emot en bild och kontrollerar så den är av rätt filtyp (gif, jpg, png) 
@@ -87,6 +100,30 @@ namespace Gallery.Model
         public string SaveImage(Stream stream, string fileName)
         {
 
+            //Kontroll så filnamnet inte är upptaget. Byter namn isåna fall.
+            string ext;
+            string onlyName;
+            Match approvedExtension = ApprovedExtensions.Match(fileName);
+            int i = 0;
+
+            while(ImageExists(fileName))
+            {
+                //Kollar så namnet har en ok extension
+                if(fileName == approvedExtension.ToString())
+                {
+                    i++;
+                    ext = Path.GetExtension(fileName);
+                    onlyName = Path.GetFileNameWithoutExtension(fileName);
+                    fileName = (String.Format("{0}({1}){2}",onlyName,i,ext));
+                }
+                else
+                {
+                    //THROW EXCEPTION 
+                }
+
+            }
+
+
             //Skapar ett bildobjekt från strömmen och sparar den.
             Image img = Image.FromStream(stream);
             img.Save(String.Format("{0}\\{1}",PhysicalUploadedImagesPath, fileName));
@@ -97,6 +134,7 @@ namespace Gallery.Model
             int thumbHeight = 0;
             int thumbWidth = 0;
 
+            //kollar vilken sida som är längst på bilden och förminskar den därefter.
             if (img.Size.Height > img.Size.Width)
             {
                 factor = (double)100 / img.Size.Height;
@@ -112,7 +150,7 @@ namespace Gallery.Model
 
             Image thumb = img.GetThumbnailImage(thumbWidth,thumbHeight, null, IntPtr.Zero);
             thumb.Save(String.Format("{0}\\Thumbnails\\{1}", PhysicalUploadedImagesPath, fileName));
-            return null;
+            return fileName;
         }
 
 
