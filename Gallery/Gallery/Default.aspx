@@ -15,7 +15,7 @@
     <div>
                               
     <%-- Bilden som visas --%>
-        <asp:Image ID="ImageDisplay" runat="server" />
+        <asp:Image ID="ImageDisplay" visible="false" runat="server" />
 
     <%-- Galleriet --%>
         <asp:Repeater ID="GalleryRepeater" runat="server" ItemType="System.String" SelectMethod="GalleryRepeater_GetData">
@@ -26,7 +26,7 @@
 
             <ItemTemplate>
                 <li>
-                    <asp:HyperLink ID="HyperLink" runat="server" NavigateUrl='<%# String.Format("#?Name={0}",Item)  %>'>
+                    <asp:HyperLink ID="HyperLink" runat="server" NavigateUrl='<%# String.Format("?Name={0}",Item)  %>'>
                         <asp:Image ID="Image" runat="server" ImageUrl='<%# String.Format(@"~/Content/Images/Thumbnails/{0}", Item) %>' />                        
                     </asp:HyperLink>
                     

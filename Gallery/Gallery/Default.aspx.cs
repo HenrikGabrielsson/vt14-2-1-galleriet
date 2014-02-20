@@ -13,7 +13,14 @@ namespace Gallery
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            //Om en bild skickas med i URL:n så visas den.
+            if (Request.QueryString["Name"] != null)
+            {
+                string imgFull = Request.QueryString["Name"];
+                ImageDisplay.ImageUrl = String.Format("~//Content//Images//{0}", imgFull);
 
+                ImageDisplay.Visible = true;
+            }
         }
 
         protected void UploadButton_Click(object sender, EventArgs e)
@@ -22,7 +29,6 @@ namespace Gallery
             ImageGallery imgGall = new ImageGallery();
 
             Label.Text = imgGall.SaveImage(FileUpload.FileContent, FileUpload.FileName);
-
              
         }
 

@@ -27,7 +27,7 @@ namespace Gallery.Model
             SanitizePath = new Regex(string.Format("[{0}]", Regex.Escape(invalidChars)));
 
             //Sökvägen till bildernas mapp
-            PhysicalUploadedImagesPath = Path.Combine(AppDomain.CurrentDomain.GetData("APPBASE").ToString(), @"Content\Images");
+            PhysicalUploadedImagesPath = Path.Combine(AppDomain.CurrentDomain.GetData("APPBASE").ToString(), @"Content\Images\");
         }
 
 
@@ -51,30 +51,7 @@ namespace Gallery.Model
         //Kollar om en bild finns
         public static bool ImageExists(string name)
         {
-            /*
-            FileInfo[] allFiles = new DirectoryInfo(PhysicalUploadedImagesPath).GetFiles();
-
-            //kollar alla namn och jämför det med argumentet. Return true om nåt hittas
-            foreach (FileInfo fi in allFiles)
-            {
-                if (fi.Name == name)
-                {
-                    return true;
-                }
-            }
-
-            return false;
-            */
-
-            FileInfo[] allFiles = new DirectoryInfo(PhysicalUploadedImagesPath).GetFiles();
-            foreach (FileInfo file in allFiles)
-            {
-                if (file.Exists)
-                {
-                    return true;
-                }
-            }
-            return false;
+            return File.Exists(Path.Combine(PhysicalUploadedImagesPath, name))?true:false;
 
         }
 
@@ -101,26 +78,14 @@ namespace Gallery.Model
         {
 
             //Kontroll så filnamnet inte är upptaget. Byter namn isåna fall.
-            string ext;
-            string onlyName;
-            Match approvedExtension = ApprovedExtensions.Match(fileName);
+            string ext = Path.GetExtension(fileName);
+            string onlyName = Path.GetFileNameWithoutExtension(fileName);
             int i = 0;
 
             while(ImageExists(fileName))
             {
-                //Kollar så namnet har en ok extension
-                if(fileName == approvedExtension.ToString())
-                {
-                    i++;
-                    ext = Path.GetExtension(fileName);
-                    onlyName = Path.GetFileNameWithoutExtension(fileName);
-                    fileName = (String.Format("{0}({1}){2}",onlyName,i,ext));
-                }
-                else
-                {
-                    //THROW EXCEPTION 
-                }
-
+                i++;
+                fileName = (String.Format("{0}({1}){2}",onlyName,i,ext));
             }
 
 
