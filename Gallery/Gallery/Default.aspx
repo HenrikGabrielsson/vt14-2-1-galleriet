@@ -55,5 +55,6 @@
           
         </div>
     </form>
+    <script type="text/javascript" src="script/galleryJS.js"></script>
 </body>
 </html>

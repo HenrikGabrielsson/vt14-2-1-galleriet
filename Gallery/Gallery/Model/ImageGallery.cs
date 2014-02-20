@@ -12,9 +12,9 @@ namespace Gallery.Model
     public class ImageGallery
     {
         //regex som används för att kontrollera filändelsen.
-        public static Regex ApprovedExtensions;
+        public readonly static Regex ApprovedExtensions;
 
-        static string PhysicalUploadedImagesPath;
+        static readonly string PhysicalUploadedImagesPath;
 
 
         //Konstrucktor
