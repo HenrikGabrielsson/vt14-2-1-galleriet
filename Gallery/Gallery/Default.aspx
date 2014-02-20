@@ -44,6 +44,9 @@
         <asp:Label runat="server" Text="Label" ID="Label"></asp:Label>
     <%-- Upload--%>
         <asp:FileUpload ID="FileUpload" runat="server" />  
+    <%-- Validering --%>
+        <asp:RequiredFieldValidator ID="RequiredFieldValidator" runat="server" Text="Fel!" ErrorMessage="Du måste välja en fil att ladda upp!" ControlToValidate="FileUpload"></asp:RequiredFieldValidator>
+
         <asp:Button ID="UploadButton" runat="server" Text="Ladda upp" OnClick="UploadButton_Click" />
           
     </div>

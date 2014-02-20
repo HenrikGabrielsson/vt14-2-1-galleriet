@@ -47,9 +47,8 @@ namespace Gallery.Model
         }
 
 
-
         //Kollar om en bild finns
-        public static bool ImageExists(string name)
+        private static bool ImageExists(string name)
         {
             return File.Exists(Path.Combine(PhysicalUploadedImagesPath, name))?true:false;
 
@@ -67,13 +66,11 @@ namespace Gallery.Model
                 return true;
             }
 
-            else
-            {
-                return false;
-            }
+            return false;
+
         }
 
-        //Funktion som sparar uppladdade bilder och skapar en tumnagel. //EJ KLAR
+        //Funktion som sparar uppladdade bilder.
         public string SaveImage(Stream stream, string fileName)
         {
 
@@ -82,6 +79,7 @@ namespace Gallery.Model
             string onlyName = Path.GetFileNameWithoutExtension(fileName);
             int i = 0;
 
+            //Om filnamnet redan är taget så sparas bilden med ett nytt unikt namn.
             while(ImageExists(fileName))
             {
                 i++;
@@ -91,11 +89,28 @@ namespace Gallery.Model
 
             //Skapar ett bildobjekt från strömmen och sparar den.
             Image img = Image.FromStream(stream);
+
+            //kollar så bilden har korrekt MIME-typ och extension innan den sparas.
+            if(!isValidImage(img) || fileName != ApprovedExtensions.Match(fileName).ToString())
+            {
+                throw new Exception("Bilden är felaktig.");
+            }
+
             img.Save(String.Format("{0}\\{1}",PhysicalUploadedImagesPath, fileName));
 
+            //skapar en thumbnail
+            createThumbnail(img, fileName);
 
-            //Skapar också en thumbnail
-            double factor = img.Size.Height/img.Size.Width;
+            return fileName;
+        }
+
+
+
+        //funktion som skapar en thumbnail från en bild
+        public void createThumbnail(Image img, string fileName)
+        {
+            //Sidorna
+            double factor = img.Size.Height / img.Size.Width;
             int thumbHeight = 0;
             int thumbWidth = 0;
 
@@ -113,9 +128,8 @@ namespace Gallery.Model
                 thumbHeight = (int)(img.Size.Height * factor);
             }
 
-            Image thumb = img.GetThumbnailImage(thumbWidth,thumbHeight, null, IntPtr.Zero);
+            Image thumb = img.GetThumbnailImage(thumbWidth, thumbHeight, null, IntPtr.Zero);
             thumb.Save(String.Format("{0}\\Thumbnails\\{1}", PhysicalUploadedImagesPath, fileName));
-            return fileName;
         }
 
 
