@@ -49,7 +49,7 @@
             
             <%-- Validering --%>
             <asp:RequiredFieldValidator ID="RequiredFieldValidator" runat="server" Text="Fel!" ErrorMessage="Du måste välja en fil att ladda upp!" ControlToValidate="FileUpload" Display="Dynamic"></asp:RequiredFieldValidator>
-            <asp:CustomValidator ID="UploadFailValidator" OnServerValidate="UploadFailValidator_ServerValidate" runat="server" Text="Fel!" ErrorMessage="Något gick fel vid uppladdningen!" Display="Dynamic" ControlToValidate="FileUpload" ></asp:CustomValidator>
+            <asp:CustomValidator ID="UploadFailValidator" OnServerValidate="UploadFailValidator_ServerValidate" runat="server" Text="Fel!" ErrorMessage="FUCKING CHICKENS" Display="Dynamic" ControlToValidate="FileUpload" ></asp:CustomValidator>
             
             <asp:Button ID="UploadButton" runat="server" Text="Ladda upp" OnClick="UploadButton_Click" />
           

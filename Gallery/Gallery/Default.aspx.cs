@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Text;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -32,7 +34,22 @@ namespace Gallery
                 //här sparas bilden som skickas upp
                 ImageGallery imgGall = new ImageGallery();
 
-                string imgName = imgGall.SaveImage(FileUpload.FileContent, FileUpload.FileName);
+                //letar efter olagliga tecken i filnamnet och ersätter dem med '_';
+                StringBuilder sb = new StringBuilder();
+                foreach (char c in FileUpload.FileName)
+                {
+                    if (Path.GetInvalidFileNameChars().Contains(c))
+                    {
+                        sb.Append('_');
+                    }
+                    else
+                    {
+                        sb.Append(c);
+                    }
+                }
+                string sanitizedFileName = sb.ToString();
+
+                string imgName = imgGall.SaveImage(FileUpload.FileContent, sanitizedFileName);
 
                 UploadSuccess.Text = String.Format("Bilden {0} har laddats upp utan problem!", imgName);
                 UploadSuccess.Visible = true;
@@ -43,13 +60,24 @@ namespace Gallery
         public IEnumerable<string> GalleryRepeater_GetData()
         {
             ImageGallery imgGall = new ImageGallery();
-
             return imgGall.GetImageNames(); 
         }
 
         protected void UploadFailValidator_ServerValidate(object source, ServerValidateEventArgs args)
         {
-            
+            //hämtar filnamnet på den uppladdade filen
+            string fileName = FileUpload.FileName;
+
+            //kollar om filändelsen är ok.
+            if (fileName == ImageGallery.ApprovedExtensions.Match(fileName).ToString())
+            {
+                args.IsValid = true;
+            }
+            else
+            {
+                args.IsValid = false;
+            }
+
         }
 
 
