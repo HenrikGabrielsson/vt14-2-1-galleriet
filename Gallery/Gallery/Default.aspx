@@ -8,12 +8,10 @@
     <title>Bildgalleri</title>
 </head>
 <body>
-    <form id="form1" runat="server">
-
-        <%-- Här visas fel-meddelanden --%>
-        <asp:ValidationSummary ID="ValidationSummary" runat="server" />    
-    <div>
-                              
+   
+    <%-- Om allt går bra --%> 
+    <asp:Label ID="UploadSuccess" runat="server" Visible="false"></asp:Label>
+                               
     <%-- Bilden som visas --%>
         <asp:Image ID="ImageDisplay" visible="false" runat="server" />
 
@@ -41,15 +39,21 @@
 
         </asp:Repeater>
 
-        <asp:Label runat="server" Text="Label" ID="Label"></asp:Label>
-    <%-- Upload--%>
-        <asp:FileUpload ID="FileUpload" runat="server" />  
-    <%-- Validering --%>
-        <asp:RequiredFieldValidator ID="RequiredFieldValidator" runat="server" Text="Fel!" ErrorMessage="Du måste välja en fil att ladda upp!" ControlToValidate="FileUpload"></asp:RequiredFieldValidator>
-
-        <asp:Button ID="UploadButton" runat="server" Text="Ladda upp" OnClick="UploadButton_Click" />
+    <form id="form1" runat="server">
+        <%-- Här visas fel-meddelanden --%>
+        <asp:ValidationSummary ID="ValidationSummary" runat="server" />     
+    
+        <div>
+            <%-- Upload--%>
+            <asp:FileUpload ID="FileUpload" runat="server" />  
+            
+            <%-- Validering --%>
+            <asp:RequiredFieldValidator ID="RequiredFieldValidator" runat="server" Text="Fel!" ErrorMessage="Du måste välja en fil att ladda upp!" ControlToValidate="FileUpload" Display="Dynamic"></asp:RequiredFieldValidator>
+            <asp:CustomValidator ID="UploadFailValidator" OnServerValidate="UploadFailValidator_ServerValidate" runat="server" Text="Fel!" ErrorMessage="Något gick fel vid uppladdningen!" Display="Dynamic" ControlToValidate="FileUpload" ></asp:CustomValidator>
+            
+            <asp:Button ID="UploadButton" runat="server" Text="Ladda upp" OnClick="UploadButton_Click" />
           
-    </div>
+        </div>
     </form>
 </body>
 </html>

@@ -93,7 +93,7 @@ namespace Gallery.Model
             //kollar så bilden har korrekt MIME-typ och extension innan den sparas.
             if(!isValidImage(img) || fileName != ApprovedExtensions.Match(fileName).ToString())
             {
-                throw new Exception("Bilden är felaktig.");
+                return null;
             }
 
             img.Save(String.Format("{0}\\{1}",PhysicalUploadedImagesPath, fileName));

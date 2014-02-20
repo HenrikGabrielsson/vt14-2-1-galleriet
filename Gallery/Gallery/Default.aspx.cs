@@ -20,16 +20,24 @@ namespace Gallery
                 ImageDisplay.ImageUrl = String.Format("~//Content//Images//{0}", imgFull);
 
                 ImageDisplay.Visible = true;
+         
+
             }
         }
 
         protected void UploadButton_Click(object sender, EventArgs e)
         {
-            //här sparas bilden som skickas upp
-            ImageGallery imgGall = new ImageGallery();
+            if(IsValid)
+            { 
+                //här sparas bilden som skickas upp
+                ImageGallery imgGall = new ImageGallery();
 
-            Label.Text = imgGall.SaveImage(FileUpload.FileContent, FileUpload.FileName);
-             
+                string imgName = imgGall.SaveImage(FileUpload.FileContent, FileUpload.FileName);
+
+                UploadSuccess.Text = String.Format("Bilden {0} har laddats upp utan problem!", imgName);
+                UploadSuccess.Visible = true;
+            }
+
         }
 
         public IEnumerable<string> GalleryRepeater_GetData()
@@ -38,6 +46,12 @@ namespace Gallery
 
             return imgGall.GetImageNames(); 
         }
+
+        protected void UploadFailValidator_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            
+        }
+
 
     }
 }
