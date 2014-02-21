@@ -9,9 +9,12 @@
 </head>
 <body>
    
-    <%-- Om allt går bra --%> 
-    <asp:Label ID="UploadSuccess" runat="server" Visible="false"></asp:Label>
-                               
+    <%-- Om allt går bra --%>   
+    <asp:Panel ID="SuccessPanel" runat="server" Visible="false">
+        <asp:Label ID="UploadSuccess" runat="server"></asp:Label>
+        <a href="#" id="closePanelButton"><img src="script/close.jpg" /></a>
+    </asp:Panel>
+                              
     <%-- Bilden som visas --%>
         <asp:Image ID="ImageDisplay" visible="false" runat="server" />
 
@@ -55,6 +58,6 @@
           
         </div>
     </form>
-    <script type="text/javascript" src="script/galleryJS.js"></script>
++    <script type="text/javascript" src="script/galleryJS.js"></script>
 </body>
 </html>

@@ -61,7 +61,7 @@ namespace Gallery
                 if (imgName != null)
                 {
                     UploadSuccess.Text = String.Format("Bilden {0} har laddats upp utan problem!", imgName);
-                    UploadSuccess.Visible = true;
+                    SuccessPanel.Visible = true;
                 }
                 else
                 {
