@@ -12,8 +12,7 @@ namespace Gallery.Model
     public class ImageGallery
     {
         //regex som används för att kontrollera filändelsen.
-        public readonly static Regex ApprovedExtensions;
-
+        readonly static Regex ApprovedExtensions;
         static readonly string PhysicalUploadedImagesPath;
 
 
@@ -69,7 +68,6 @@ namespace Gallery.Model
         //Funktion som sparar uppladdade bilder.
         public string SaveImage(Stream stream, string fileName)
         {
-
             //Kontroll så filnamnet inte är upptaget. Byter namn isåna fall.
             string ext = Path.GetExtension(fileName);
             string onlyName = Path.GetFileNameWithoutExtension(fileName);
@@ -88,7 +86,7 @@ namespace Gallery.Model
             //kollar så bilden har korrekt MIME-typ och extension innan den sparas.
             if (fileName != ApprovedExtensions.Match(fileName).ToString())
             {
-                throw new Exception("Den uppladdade filen hade fel format!");
+                return null;
             }
 
             //letar efter olagliga tecken i filnamnet och ersätter dem med '_';

@@ -30,7 +30,12 @@ namespace Gallery
         protected void UploadButton_Click(object sender, EventArgs e)
         {
             if(IsValid)
-            { 
+            {
+                //En ny validator som säger ifrån ifall uppladdningen misslyckas.
+                CustomValidator checkUpload = new CustomValidator();
+                checkUpload.ErrorMessage = "Det gick tyvärr inte att ladda upp filen";
+                checkUpload.Text = "Fel!";
+
                 //här sparas bilden som skickas upp
                 ImageGallery imgGall = new ImageGallery();
 
@@ -49,10 +54,20 @@ namespace Gallery
                 }
                 string sanitizedFileName = sb.ToString();
 
+                //här sparar filen.
                 string imgName = imgGall.SaveImage(FileUpload.FileContent, sanitizedFileName);
 
-                UploadSuccess.Text = String.Format("Bilden {0} har laddats upp utan problem!", imgName);
-                UploadSuccess.Visible = true;
+                //check ifall uppladdningen fungerade.
+                if (imgName != null)
+                {
+                    UploadSuccess.Text = String.Format("Bilden {0} har laddats upp utan problem!", imgName);
+                    UploadSuccess.Visible = true;
+                }
+                else
+                {
+                    checkUpload.IsValid = false;    
+                    Page.Validators.Add(checkUpload);
+                }
             }
 
         }
@@ -61,23 +76,6 @@ namespace Gallery
         {
             ImageGallery imgGall = new ImageGallery();
             return imgGall.GetImageNames(); 
-        }
-
-        protected void UploadFailValidator_ServerValidate(object source, ServerValidateEventArgs args)
-        {
-            //hämtar filnamnet på den uppladdade filen
-            string fileName = FileUpload.FileName;
-
-            //kollar om filändelsen är ok.
-            if (fileName == ImageGallery.ApprovedExtensions.Match(fileName).ToString())
-            {
-                args.IsValid = true;
-            }
-            else
-            {
-                args.IsValid = false;
-            }
-
         }
 
 

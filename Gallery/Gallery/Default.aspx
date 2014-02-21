@@ -41,17 +41,17 @@
 
     <form id="form1" runat="server">
         <%-- Här visas fel-meddelanden --%>
-        <asp:ValidationSummary ID="ValidationSummary" runat="server" />     
+        <asp:ValidationSummary ID="ValidationSummary1" runat="server" />     
     
         <div>
             <%-- Upload--%>
             <asp:FileUpload ID="FileUpload" runat="server" />  
+            <asp:Button ID="UploadButton" runat="server" Text="Ladda upp" OnClick="UploadButton_Click" />
             
             <%-- Validering --%>
             <asp:RequiredFieldValidator ID="RequiredFieldValidator" runat="server" Text="Fel!" ErrorMessage="Du måste välja en fil att ladda upp!" ControlToValidate="FileUpload" Display="Dynamic"></asp:RequiredFieldValidator>
-            <asp:CustomValidator ID="UploadFailValidator" OnServerValidate="UploadFailValidator_ServerValidate" runat="server" Text="Fel!" ErrorMessage="FUCKING CHICKENS" Display="Dynamic" ControlToValidate="FileUpload" ></asp:CustomValidator>
+            <asp:RegularExpressionValidator ID="RegularExpressionValidator" runat="server" ErrorMessage="Fel filformat!" Display="Dynamic" Text="Fel!" ControlToValidate="FileUpload" ValidationExpression="^.*\.(jpg|gif|png)$"></asp:RegularExpressionValidator>             
             
-            <asp:Button ID="UploadButton" runat="server" Text="Ladda upp" OnClick="UploadButton_Click" />
           
         </div>
     </form>
