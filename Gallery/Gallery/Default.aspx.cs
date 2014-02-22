@@ -19,12 +19,12 @@ namespace Gallery
             if (Request.QueryString["Name"] != null)
             {
                 string imgFull = Request.QueryString["Name"];
+
                 ImageDisplay.ImageUrl = String.Format("~//Content//Images//{0}", imgFull);
 
                 ImageDisplay.Visible = true;
-         
-
             }
+
         }
 
         protected void UploadButton_Click(object sender, EventArgs e)
@@ -36,14 +36,11 @@ namespace Gallery
                 checkUpload.ErrorMessage = "Det gick tyvärr inte att ladda upp filen";
                 checkUpload.Text = "Fel!";
 
-                //här sparas bilden som skickas upp
-                ImageGallery imgGall = new ImageGallery();
-
                 //letar efter olagliga tecken i filnamnet och ersätter dem med '_';
                 StringBuilder sb = new StringBuilder();
                 foreach (char c in FileUpload.FileName)
                 {
-                    if (Path.GetInvalidFileNameChars().Contains(c))
+                    if(Path.GetInvalidFileNameChars().Contains(c))
                     {
                         sb.Append('_');
                     }
@@ -54,6 +51,7 @@ namespace Gallery
                 }
                 string sanitizedFileName = sb.ToString();
 
+                ImageGallery imgGall = new ImageGallery();
                 //här sparar filen.
                 string imgName = imgGall.SaveImage(FileUpload.FileContent, sanitizedFileName);
 
@@ -62,6 +60,7 @@ namespace Gallery
                 {
                     UploadSuccess.Text = String.Format("Bilden {0} har laddats upp utan problem!", imgName);
                     SuccessPanel.Visible = true;
+                    Response.Redirect(String.Format("?Name={0}",imgName));
                 }
                 else
                 {
@@ -69,7 +68,6 @@ namespace Gallery
                     Page.Validators.Add(checkUpload);
                 }
             }
-
         }
 
         public IEnumerable<string> GalleryRepeater_GetData()

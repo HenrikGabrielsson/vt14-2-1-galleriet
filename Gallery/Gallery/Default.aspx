@@ -9,6 +9,8 @@
 </head>
 <body>
    
+    <h1>Bildgalleri</h1>
+
     <%-- Om allt går bra --%>   
     <asp:Panel ID="SuccessPanel" runat="server" Visible="false">
         <asp:Label ID="UploadSuccess" runat="server"></asp:Label>
@@ -16,19 +18,20 @@
     </asp:Panel>
                               
     <%-- Bilden som visas --%>
+    <div id="imageDisplayDiv">
         <asp:Image ID="ImageDisplay" visible="false" runat="server" />
+    </div>
 
     <%-- Galleriet --%>
         <asp:Repeater ID="GalleryRepeater" runat="server" ItemType="System.String" SelectMethod="GalleryRepeater_GetData">
             <HeaderTemplate>
-                <ul>
+                <ul id="thumbGallery">
             </HeaderTemplate>
-
 
             <ItemTemplate>
                 <li>
                     <asp:HyperLink ID="HyperLink" runat="server" NavigateUrl='<%# String.Format("?Name={0}",Item)  %>'>
-                        <asp:Image ID="Image" runat="server" ImageUrl='<%# String.Format(@"~/Content/Images/Thumbnails/{0}", Item) %>' />                        
+                        <asp:Image ID="Image" CssClass="thumbnail" runat="server" ImageUrl='<%# String.Format(@"~/Content/Images/Thumbnails/{0}", Item) %>' />                        
                     </asp:HyperLink>
                     
                 </li>
@@ -58,6 +61,6 @@
           
         </div>
     </form>
-+    <script type="text/javascript" src="script/galleryJS.js"></script>
+    <script type="text/javascript" src="script/galleryJS.js"></script>
 </body>
 </html>

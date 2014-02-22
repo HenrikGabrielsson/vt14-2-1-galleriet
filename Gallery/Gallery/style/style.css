@@ -1,1 +1,74 @@
-﻿
+﻿html
+{
+    max-height:100%;
+}
+
+#thumbGallery
+{
+    list-style-type:none;
+    
+    overflow:auto;
+    float:left;
+
+    width:120px;
+    height:500px;
+        
+    margin:0px;
+    padding:0px;
+
+}
+
+#thumbGallery .thumbnail
+{
+    padding:5px;
+}
+
+#thumbGallery .selectedImg
+{
+    background-color:#1a08b6;
+}
+
+#imageDisplayDiv
+{
+    border:1px solid #222222;
+    height:500px;
+    width:500px;
+
+    float:left;
+
+    background-color:#DDDDDD;
+
+}
+
+#imageDisplayDiv img 
+{
+    max-height:100%;
+    max-width:100%;
+
+    display:block;
+    margin:auto;
+}
+
+form
+{
+    border:1px solid grey;
+    padding-top:10px;
+    clear:both;
+    width:500px;
+}
+
+#ValidationSummary1
+{
+    background-color:#fe9f9f;
+}
+
+#SuccessPanel
+{
+    background-color:#b4f3a7;
+    width:500px;
+}
+
+#SuccessPanel a
+{
+    float:right;
+}

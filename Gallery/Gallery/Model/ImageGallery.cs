@@ -13,6 +13,7 @@ namespace Gallery.Model
     {
         //regex som används för att kontrollera filändelsen.
         readonly static Regex ApprovedExtensions;
+
         static readonly string PhysicalUploadedImagesPath;
 
 
@@ -71,7 +72,7 @@ namespace Gallery.Model
             //Kontroll så filnamnet inte är upptaget. Byter namn isåna fall.
             string ext = Path.GetExtension(fileName);
             string onlyName = Path.GetFileNameWithoutExtension(fileName);
-            int i = 0;
+            int i = 1;
 
             //Om filnamnet redan är taget så sparas bilden med ett nytt unikt namn.
             while(ImageExists(fileName))
@@ -104,7 +105,7 @@ namespace Gallery.Model
             }
             string sanitizedFileName = sb.ToString();
 
-
+            //Originalbilden sparas
             img.Save(String.Format("{0}\\{1}", PhysicalUploadedImagesPath, sanitizedFileName));
 
             //skapar en thumbnail
