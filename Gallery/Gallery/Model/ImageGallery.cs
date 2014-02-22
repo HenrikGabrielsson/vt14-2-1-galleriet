@@ -11,8 +11,9 @@ namespace Gallery.Model
 {
     public class ImageGallery
     {
-        //regex som används för att kontrollera filändelsen.
+        //regex som används för att kontrollera filändelsen och namnet
         readonly static Regex ApprovedExtensions;
+        readonly static Regex SanitizePath;
 
         static readonly string PhysicalUploadedImagesPath;
 
@@ -21,6 +22,7 @@ namespace Gallery.Model
         static ImageGallery()
         {
             ApprovedExtensions = new Regex("^.*\\.(gif|jpg|png)$");
+            SanitizePath = new Regex(string.Format("[{0}]", Regex.Escape(Path.GetInvalidFileNameChars().ToString())));
 
             //Sökvägen till bildernas mapp
             PhysicalUploadedImagesPath = Path.Combine(AppDomain.CurrentDomain.GetData("APPBASE").ToString(), @"Content\Images\");
@@ -90,30 +92,17 @@ namespace Gallery.Model
                 return null;
             }
 
-            //letar efter olagliga tecken i filnamnet och ersätter dem med '_';
-            StringBuilder sb = new StringBuilder();
-            foreach (char c in fileName)
-            {
-                if (Path.GetInvalidFileNameChars().Contains(c))
-                {
-                    sb.Append('_');
-                }
-                else
-                {
-                    sb.Append(c);
-                }
-            }
-            string sanitizedFileName = sb.ToString();
+            //byter ut tecken som inte får finnas i ett filnamn
+            SanitizePath.Replace(fileName,"_");
 
             //Originalbilden sparas
-            img.Save(String.Format("{0}\\{1}", PhysicalUploadedImagesPath, sanitizedFileName));
+            img.Save(String.Format("{0}\\{1}", PhysicalUploadedImagesPath, fileName));
 
             //skapar en thumbnail
             createThumbnail(img, fileName);
 
             return fileName;
         }
-
 
 
         //funktion som skapar en thumbnail från en bild
@@ -141,7 +130,6 @@ namespace Gallery.Model
             Image thumb = img.GetThumbnailImage(thumbWidth, thumbHeight, null, IntPtr.Zero);
             thumb.Save(String.Format("{0}\\Thumbnails\\{1}", PhysicalUploadedImagesPath, fileName));
         }
-
 
     }
 }

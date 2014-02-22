@@ -76,6 +76,5 @@ namespace Gallery
             return imgGall.GetImageNames(); 
         }
 
-
     }
 }
